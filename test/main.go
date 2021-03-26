@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"sort"
 
 	gcrauthn "github.com/google/go-containerregistry/pkg/authn"
 	gcrname "github.com/google/go-containerregistry/pkg/name"
@@ -36,7 +37,7 @@ func realMain() error {
 	// Try to find the best "authentication
 
 	if *repoPtr == "" {
-		*repoPtr = "gcr.io/dev-tiki-infra/helm-container"
+		*repoPtr = "asia.gcr.io/tikivn/xlearning"
 		// return fmt.Errorf("missing -repo")
 	}
 
@@ -70,5 +71,10 @@ func realMain() error {
 		manifests = append(manifests, manifest{k, m})
 	}
 
+	sort.Slice(manifests, func(i, j int) bool {
+		return manifests[j].Info.Created.Before(manifests[i].Info.Created)
+	})
+
+	fmt.Println(manifests)
 	return nil
 }
