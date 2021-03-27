@@ -53,6 +53,9 @@ func realMain() error {
 		return fmt.Errorf("missing -repo")
 	}
 
+	if *allowTaggedPtr == false && *tagPrefixPtr != "" {
+		return fmt.Errorf("-allow-tagged must be true when -tag-prefix is declared")
+	}
 	// Try to find the "best" authentication.
 	var auther gcrauthn.Authenticator
 	if *tokenPtr != "" {
