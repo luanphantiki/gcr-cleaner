@@ -163,5 +163,5 @@ func (c *Cleaner) deleteOne(ref gcrname.Reference) error {
 // and is before the requested time.
 func (c *Cleaner) shouldDelete(m gcrgoogle.ManifestInfo, since time.Time, allowTag bool, tagPrefix string) bool {
 	r, _ := regexp.Compile("^" + tagPrefix + ".*$")
-	return (allowTag && r.MatchString(m.Tags[0]) || len(m.Tags) == 0) && m.Uploaded.UTC().Before(since)
+	return ((allowTag && r.MatchString(m.Tags[0])) || len(m.Tags) == 0) && m.Uploaded.UTC().Before(since)
 }
